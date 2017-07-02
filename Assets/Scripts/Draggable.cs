@@ -5,14 +5,28 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public delegate void Delegate_OnBeginDrag(PointerEventData EventData);
+public delegate void Delegate_OnDrag(PointerEventData EventData);
+public delegate void Delegate_OnEndDrag(PointerEventData EventData);
+
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Transform ParentToReturnTo = null;
     public GameObject PlaceHolder = null;
     public Transform PlaceHolderParent = null;
 
+    public Delegate_OnDrag OnDragHandler = null;
+    public Delegate_OnBeginDrag OnBeginDragHandler = null;
+    public Delegate_OnEndDrag OnEndDragHandler = null;
+
     public void OnBeginDrag(PointerEventData EventData)
     {
+        if (OnBeginDragHandler != null)
+        {
+            OnBeginDragHandler(EventData);
+            return;
+        }
+
         PlaceHolder = new GameObject();
         PlaceHolder.transform.SetParent(this.transform.parent);
         LayoutElement LayoutElement = PlaceHolder.AddComponent<LayoutElement>();
@@ -34,6 +48,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnDrag(PointerEventData EventData)
     {
+        if (OnDragHandler != null)
+        {
+            OnDragHandler(EventData);
+            return;
+        }
+
         transform.position = EventData.position;
 
         if (PlaceHolder.transform.parent != PlaceHolderParent)
@@ -62,6 +82,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData EventData)
     {
+        if (OnBeginDragHandler != null)
+        {
+            OnBeginDragHandler(EventData);
+            return;
+        }
+
         transform.SetParent(ParentToReturnTo);
         transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
         var CanvasGroup = GetComponent<CanvasGroup>();

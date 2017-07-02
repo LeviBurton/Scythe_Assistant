@@ -4,6 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using System.Reflection;
+
+public enum CardType
+{
+    Automa,
+    Tracker,
+    Reference,
+}
 
 public enum Facing
 {
@@ -13,29 +21,37 @@ public enum Facing
 
 public class Card : MonoBehaviour, IPointerClickHandler
 {
-    public Image FrontImage;
-    public Image BackImage;
+    public CardType CardType;
 
-    public bool bFaceUp;
-
-    public void SetOrientation(bool bFaceUp)
+    private Image FrontImage;
+    private Image BackImage;
+    private bool bFaceUp;
+    public bool FaceUp
     {
-        this.bFaceUp = bFaceUp;
-        if (bFaceUp == true)
+        get
         {
-            FrontImage.enabled = true;
-            BackImage.enabled = false;
+            return bFaceUp;
         }
-        else
+        set
         {
-            FrontImage.enabled = false;
-            BackImage.enabled = true;
+            bFaceUp = value;
+
+            if (bFaceUp == true)
+            {
+                FrontImage.enabled = true;
+                BackImage.enabled = false;
+            }
+            else
+            {
+                FrontImage.enabled = false;
+                BackImage.enabled = true;
+            }
         }
     }
 
     public void FlipCard()
     {
-        SetOrientation(!bFaceUp);    
+        FaceUp = !FaceUp;
     }
 
     public void OnPointerClick(PointerEventData EventData)
@@ -43,8 +59,8 @@ public class Card : MonoBehaviour, IPointerClickHandler
         FlipCard();
     }
 
-    // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         var ImageComponents = GetComponentsInChildren<Image>();
 
         foreach (var Image in ImageComponents)
@@ -60,10 +76,33 @@ public class Card : MonoBehaviour, IPointerClickHandler
         }
 
         bFaceUp = false;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+        var Draggable = GetComponent<Draggable>();
+        if (Draggable != null)
+        {
+            Draggable.OnDragHandler += this.OnDrag;
+            Draggable.OnBeginDragHandler += this.OnBeginDrag;
+            Draggable.OnEndDragHandler += this.OnEndDrag;
+        }
+    }
+
+    #region Drag Handling
+    public void OnBeginDrag(PointerEventData EventData)
+    {
+        Debug.Log(this.name + " OnBeginDrag");
+    }
+    public void OnDrag(PointerEventData EventData)
+    {
+        Debug.Log(this.name + " OnDrag");
+    }
+    public void OnEndDrag(PointerEventData EventData)
+    {
+        Debug.Log(this.name + " OnEndDrag");
+    }
+    #endregion
+
+    void Update ()
+    {
     
     }
 }

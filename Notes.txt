@@ -1,0 +1,10 @@
+Design notes
+
+think about decks vs cards with components on them.  
+
+decks should be able to show their top card.  they should allow us to pull a card from the deck -- like the top card.
+decks should allow for us to drag the top card of the deck to another deck.  decks should allow us 
+to view all the cards in the deck.  
+
+decks should be able to filter what kind of cards they are, so we can disallow certain types of cards to be added
+to the deck.
