@@ -13,15 +13,8 @@ public enum ECardType
 public class Card : ScriptableObject
 {
     public ECardType CardType;
-
     public string Name;
-
-    [SerializeField]
     public Sprite ImageFront;
-
-    [SerializeField]
     public Sprite ImageBack;
-
-
 }
 
