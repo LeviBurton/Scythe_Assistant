@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
+    public List<CardBehavior> Cards = new List<CardBehavior>();
+
+
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		
 	}
 	

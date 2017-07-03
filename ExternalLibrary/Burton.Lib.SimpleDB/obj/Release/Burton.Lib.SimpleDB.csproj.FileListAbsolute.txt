@@ -1,0 +1,7 @@
+C:\Users\levib\Documents\Visual Studio 2015\Projects\Burton.Tools\Burton.Lib.SimpleDB\bin\Release\Burton.Lib.SimpleDB.dll
+C:\Users\levib\Documents\Visual Studio 2015\Projects\Burton.Tools\Burton.Lib.SimpleDB\bin\Release\Burton.Lib.SimpleDB.pdb
+C:\Users\levib\Documents\Visual Studio 2015\Projects\Burton.Tools\Burton.Lib.SimpleDB\obj\Release\Burton.Lib.SimpleDB.dll
+C:\Users\levib\Documents\Visual Studio 2015\Projects\Burton.Tools\Burton.Lib.SimpleDB\obj\Release\Burton.Lib.SimpleDB.pdb
+C:\Users\levib\Documents\Visual Studio 2015\Projects\Burton.Tools\Burton.Lib.SimpleDB\obj\Release\Burton.Lib.SimpleDB.csprojResolveAssemblyReference.cache
+C:\Users\levib\Documents\Visual Studio 2015\Projects\Burton.Tools\Burton.Lib.SimpleDB\bin\Release\NClone.dll
+C:\Users\levib\Documents\Visual Studio 2015\Projects\Burton.Tools\Burton.Lib.SimpleDB\bin\Release\NClone.xml
