@@ -87,7 +87,6 @@
     <Compile Include="Assets\Scripts\Deck\Deck.cs" />
     <Compile Include="Assets\Scripts\Draggable.cs" />
     <Compile Include="Assets\Scripts\Dropzone.cs" />
-    <Compile Include="Assets\Scripts\SimpleDB\SimpleDB.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
