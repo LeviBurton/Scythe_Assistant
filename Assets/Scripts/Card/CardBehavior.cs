@@ -21,6 +21,9 @@ public class CardBehavior : MonoBehaviour
 
     public void SetFacing(bool Up)
     {
+        if (FrontImageComponent == null || BackImageComponent == null)
+            return;
+
         FrontImageComponent.enabled = Up;
         BackImageComponent.enabled = !Up;
     }
