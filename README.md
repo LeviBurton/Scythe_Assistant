@@ -1,4 +1,4 @@
-#Scythe_Assistant
+# Scythe Assistant
 
 Scythe_Assistant is a companion app currently in development for the board game Scythe.  It allows you to use more than one automa player by providing the automa decks in a friendly app format.
 
