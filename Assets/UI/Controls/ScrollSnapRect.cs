@@ -9,7 +9,6 @@ using System.Collections.Generic;
 [RequireComponent(typeof(ScrollRect))]
 public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-
     [Tooltip("Set starting page index - starting from 0")]
     public int startingPage = 0;
     [Tooltip("Threshold time for fast swipe in seconds")]

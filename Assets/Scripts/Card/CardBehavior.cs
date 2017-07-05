@@ -18,6 +18,10 @@ public class CardBehavior : MonoBehaviour
     public Card Card;
     public Image FrontImageComponent;
     public Image BackImageComponent;
+    public Draggable Draggable;
+    public CanvasGroup CanvasGroup;
+
+    public int SiblingIndex = 0;
 
     public void SetFacing(bool Up)
     {
@@ -47,21 +51,43 @@ public class CardBehavior : MonoBehaviour
 
     void Start ()
     {
-        SetFacing(true);
+        Draggable = GetComponent<Draggable>();
+        CanvasGroup = GetComponent<CanvasGroup>();
+
+        if (Draggable != null)
+        {
+            Draggable.OnBeginDragHandler += OnBeginDrag;
+            Draggable.OnDragHandler += OnDrag;
+            Draggable.OnEndDragHandler += OnEndDrag;
+        }
     }
 
     #region Drag Handling
     public void OnBeginDrag(PointerEventData EventData)
     {
-        Debug.Log(this.name + " OnBeginDrag");
+        Draggable.ParentToReturnTo = this.transform.parent;
+        SiblingIndex = transform.GetSiblingIndex();
+
+        // FIXME!
+        transform.SetParent(this.transform.parent.parent.parent.parent);
+        CanvasGroup.blocksRaycasts = false;
     }
+
     public void OnDrag(PointerEventData EventData)
     {
         Debug.Log(this.name + " OnDrag");
+        var RectTransform = GetComponent<RectTransform>();
+        RectTransform.position = EventData.position;
+
+        //transform = EventData.position;
     }
     public void OnEndDrag(PointerEventData EventData)
     {
-        Debug.Log(this.name + " OnEndDrag");
+        transform.SetParent(Draggable.ParentToReturnTo);
+        transform.SetSiblingIndex(SiblingIndex);
+        transform.position = Draggable.ParentToReturnTo.transform.position;
+
+        CanvasGroup.blocksRaycasts = true;
     }
     #endregion
 

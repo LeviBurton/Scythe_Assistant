@@ -82,9 +82,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData EventData)
     {
-        if (OnBeginDragHandler != null)
+        if (OnEndDragHandler != null)
         {
-            OnBeginDragHandler(EventData);
+            OnEndDragHandler(EventData);
             return;
         }
 
