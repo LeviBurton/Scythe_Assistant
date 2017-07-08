@@ -60,6 +60,8 @@ public class CardBehavior : MonoBehaviour
             Draggable.OnDragHandler += OnDrag;
             Draggable.OnEndDragHandler += OnEndDrag;
         }
+
+        SetFacing(false);
     }
 
     #region Drag Handling
@@ -67,6 +69,11 @@ public class CardBehavior : MonoBehaviour
     {
         Draggable.ParentToReturnTo = this.transform.parent;
         SiblingIndex = transform.GetSiblingIndex();
+        var RectTransform = transform as RectTransform;
+
+        RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 360);
+        RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 240);
+
 
         // FIXME!
         transform.SetParent(this.transform.parent.parent.parent.parent);
@@ -75,17 +82,23 @@ public class CardBehavior : MonoBehaviour
 
     public void OnDrag(PointerEventData EventData)
     {
-        Debug.Log(this.name + " OnDrag");
         var RectTransform = GetComponent<RectTransform>();
         RectTransform.position = EventData.position;
 
+ 
         //transform = EventData.position;
     }
+
     public void OnEndDrag(PointerEventData EventData)
     {
         transform.SetParent(Draggable.ParentToReturnTo);
         transform.SetSiblingIndex(SiblingIndex);
         transform.position = Draggable.ParentToReturnTo.transform.position;
+
+        var RectTransform = (RectTransform)transform;
+
+        // Set card width and height to deck width and height
+        RectTransform.sizeDelta = ((RectTransform)this.Draggable.ParentToReturnTo.transform).sizeDelta;
 
         CanvasGroup.blocksRaycasts = true;
     }

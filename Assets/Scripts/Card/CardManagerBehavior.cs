@@ -35,65 +35,22 @@ public class CardManagerBehavior : MonoBehaviour {
         var ReferenceCards = CardManager.Instance.Items.Where(x => x.CardType == ECardType.Reference).ToList();
         var TrackerCards = CardManager.Instance.Items.Where(x => x.CardType == ECardType.Tracker).ToList();
         var AllCards = CardManager.Instance.Items.ToList();
-        var DeckList = FindObjectsOfType<UI_Deck>();
 
-        foreach (var Deck in DeckList)
+        AutomaDeck = GameObject.Find("AutomaDeck").GetComponent<UI_Deck>();
+        AutomaDiscardDeck = GameObject.Find("AutomaDiscardDeck").GetComponent<UI_Deck>();
+        TrackerDeck = GameObject.Find("TrackerDeck").GetComponent<UI_Deck>();
+        ReferenceDeck = GameObject.Find("ReferenceDeck").GetComponent<UI_Deck>();
+        SingleDisplayDeck = GameObject.Find("SingleDisplayDeck").GetComponent<UI_Deck>();
+
+        for (int i = 0; i < AutomaCards.Count;i++)
         {
-            if (Deck.name == "AutomaDeck")
-            {
-                AutomaDeck = Deck;
-            }
-            else if (Deck.name == "AutomaDiscardDeck")
-            {
-                AutomaDiscardDeck = Deck;
-            }
-            else if (Deck.name == "TrackerDeck")
-            {
-                TrackerDeck = Deck;
-            }
-            else if (Deck.name == "ReferenceDeck")
-            {
-                ReferenceDeck = Deck;
-            }
-            else if (Deck.name == "SingleDisplayDeck")
-            {
-                SingleDisplayDeck = Deck;
-            }
-        }
-
-        for (int i = 0; i < AllCards.Count; i++)
-        {
-            var Card = AllCards[i];
-            Transform DeckTransform = null;
-
-            if (Card.CardType == ECardType.Automa)
-            {
-                DeckTransform = AutomaDeck.transform;
-            }
-            else if (Card.CardType == ECardType.Reference)
-            {
-                DeckTransform = ReferenceDeck.transform;
-            }
-            else if (Card.CardType == ECardType.Tracker)
-            {
-                DeckTransform = TrackerDeck.transform;
-            }
-
-            // Testing
-            if (i == 0)
-            {
-                DeckTransform = SingleDisplayDeck.transform;
-            }
-
-            var Spawned = Instantiate(CardPrefab, DeckTransform);
-
-            // Testing
-            if (DeckTransform != SingleDisplayDeck.transform)
-            {
-                Spawned.transform.localScale /= 4;
-            }
-
+            var Card = AutomaCards.ElementAt(i);
+            var Spawned = Instantiate(CardPrefab, AutomaDeck.transform);
             var CardBehavior = Spawned.GetComponent<CardBehavior>();
+            var RectTransform = (RectTransform)CardBehavior.transform;
+
+            // Set card width and height to deck width and height
+            RectTransform.sizeDelta = ((RectTransform)AutomaDeck.transform).sizeDelta;
 
             InitCardBehavior(CardBehavior, Card);
             CardBehaviors.Add(CardBehavior);
