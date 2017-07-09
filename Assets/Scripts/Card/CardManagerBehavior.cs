@@ -22,12 +22,9 @@ public class CardManagerBehavior : MonoBehaviour {
         InCardBehavior.GetImageComponents();
         InCardBehavior.FrontImageComponent.sprite = InCard.ImageFront;
         InCardBehavior.BackImageComponent.sprite = InCard.ImageBack;
-
-
-        InCardBehavior.SetFacing(true);
     }
 
-    void Start ()
+    void Start()
     {
         CardManager.Instance.RefreshAssets();
 
@@ -52,14 +49,45 @@ public class CardManagerBehavior : MonoBehaviour {
             // Set card width and height to deck width and height
             RectTransform.sizeDelta = ((RectTransform)AutomaDeck.transform).sizeDelta;
 
+            CardBehavior.SetFacing(false);
             InitCardBehavior(CardBehavior, Card);
             CardBehaviors.Add(CardBehavior);
-            Spawned.transform.SetSiblingIndex(i);
+          //  Spawned.transform.SetSiblingIndex(i);
+            Spawned.name = Card.name;
+        }
+
+        for (int i = 0; i < TrackerCards.Count; i++)
+        {
+            var Card = TrackerCards.ElementAt(i);
+            var Spawned = Instantiate(CardPrefab, TrackerDeck.transform);
+            var CardBehavior = Spawned.GetComponent<CardBehavior>();
+            var RectTransform = (RectTransform)CardBehavior.transform;
+
+            CardBehavior.SetFacing(true);
+
+            // Set card width and height to deck width and height
+            RectTransform.sizeDelta = ((RectTransform)TrackerDeck.transform).sizeDelta;
+
+            InitCardBehavior(CardBehavior, Card);
+            CardBehaviors.Add(CardBehavior);
+         //   Spawned.transform.SetSiblingIndex(i);
+            Spawned.name = Card.name;
+        }
+
+        for (int i = 0; i < ReferenceCards.Count; i++)
+        {
+            var Card = ReferenceCards.ElementAt(i);
+            var Spawned = Instantiate(CardPrefab, ReferenceDeck.transform);
+            var CardBehavior = Spawned.GetComponent<CardBehavior>();
+            var RectTransform = (RectTransform)CardBehavior.transform;
+
+            // Set card width and height to deck width and height
+            RectTransform.sizeDelta = ((RectTransform)ReferenceDeck.transform).sizeDelta;
+            CardBehavior.SetFacing(true);
+            InitCardBehavior(CardBehavior, Card);
+            CardBehaviors.Add(CardBehavior);
+            //Spawned.transform.SetSiblingIndex(i);
+            Spawned.name = Card.name;
         }
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

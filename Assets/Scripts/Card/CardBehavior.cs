@@ -21,7 +21,17 @@ public class CardBehavior : MonoBehaviour
     public Draggable Draggable;
     public CanvasGroup CanvasGroup;
 
-    public int SiblingIndex = 0;
+    public RectTransform CanvasRectTransform;
+
+    public void Awake()
+    {
+        GetImageComponents();
+        Canvas canvas = GetComponentInParent<Canvas>();
+        if (canvas != null)
+        {
+            CanvasRectTransform = canvas.transform as RectTransform;
+        }
+    }
 
     public void SetFacing(bool Up)
     {
@@ -61,22 +71,19 @@ public class CardBehavior : MonoBehaviour
             Draggable.OnEndDragHandler += OnEndDrag;
         }
 
-        SetFacing(false);
     }
 
     #region Drag Handling
     public void OnBeginDrag(PointerEventData EventData)
     {
-        Draggable.ParentToReturnTo = this.transform.parent;
-        SiblingIndex = transform.GetSiblingIndex();
         var RectTransform = transform as RectTransform;
+
+        Draggable.ParentToReturnTo = this.transform.parent;
 
         RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 360);
         RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 240);
 
-
-        // FIXME!
-        transform.SetParent(this.transform.parent.parent.parent.parent);
+        transform.SetParent(CanvasRectTransform);
         CanvasGroup.blocksRaycasts = false;
     }
 
@@ -84,15 +91,11 @@ public class CardBehavior : MonoBehaviour
     {
         var RectTransform = GetComponent<RectTransform>();
         RectTransform.position = EventData.position;
-
- 
-        //transform = EventData.position;
     }
 
     public void OnEndDrag(PointerEventData EventData)
     {
         transform.SetParent(Draggable.ParentToReturnTo);
-        transform.SetSiblingIndex(SiblingIndex);
         transform.position = Draggable.ParentToReturnTo.transform.position;
 
         var RectTransform = (RectTransform)transform;
@@ -104,8 +107,4 @@ public class CardBehavior : MonoBehaviour
     }
     #endregion
 
-    void Update ()
-    {
-    
-    }
 }

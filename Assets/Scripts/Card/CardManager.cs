@@ -19,7 +19,6 @@ public class CardManager
 
     public static string AssetsBasePath = @"Assets/Resources/Data/Cards";
     public static string ResourcesBasePath = @"Data/Cards";
-
     public static string TextureAssetsBasePath = @"Assets/Textures/Cards";
 
     public List<Card> Items = new List<Card>();
